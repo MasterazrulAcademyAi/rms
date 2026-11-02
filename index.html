@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rancangan Mengajar Sistem (RMS) - Penjana Ayat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-title">
+      <h1>Rancangan Mengajar <span data-i18n="header-sys">Sistem (RMS)</span></h1>
+      <p data-i18n="header-sub">Penjana Ayat Aktiviti, Refleksi & CQI - Disatukan untuk Salin & Tampal Mudah</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1.25rem;">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-lang-bm">BM</button>
+        <button class="lang-btn" id="btn-lang-en">EN</button>
+      </div>
+      <div class="user-badge">
+        <span class="label" data-i18n="lecturer-badge">Pensyarah</span>
+        <span id="lecturer-name-display">MOHD AZRULNIZAM BIN MOHD KAMARUDIN</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar (Left) -->
+    <aside class="sidebar">
+      
+      <!-- Profil & Subjek -->
+      <div class="form-group">
+        <h2 class="section-title" data-i18n="title-profile">Profil & Subjek</h2>
+        <label for="lecturer-name" data-i18n="label-name">Nama Pensyarah</label>
+        <input type="text" id="lecturer-name" value="MOHD AZRULNIZAM BIN MOHD KAMARUDIN" placeholder="Nama Pensyarah">
+      </div>
+      
+      <div class="form-group">
+        <label for="subject-name" data-i18n="label-subject">Nama Subjek / Kod</label>
+        <input type="text" id="subject-name" value="DFP40203 - Web Application Development" placeholder="Contoh: DFP40203">
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--surface-border); margin: 0.25rem 0;">
+
+      <!-- Tampal Silibus Mingguan -->
+      <div class="syllabus-box">
+        <h2 class="section-title">
+          <span data-i18n="title-syllabus">Silibus</span> <span id="syllabus-week-label">Minggu 1</span>
+          <button class="btn btn-secondary btn-sm" id="btn-sample-syllabus" data-i18n="btn-sample">Isi Contoh</button>
+        </h2>
+        <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem;" data-i18n="desc-syllabus">
+          Tampal semua sub-topik pengajaran bagi minggu ini (satu baris bagi setiap sub-topik):
+        </p>
+        <textarea id="syllabus-raw" placeholder="Contoh:&#10;2.2.1 Explain shells and CLI&#10;2.2.2 Explain types of shell&#10;2.2.3 Explain environmental files" style="height: 160px;"></textarea>
+      </div>
+
+      <!-- Paparan Pembahagian Sub-topik -->
+      <div class="form-group">
+        <h2 class="section-title" data-i18n="title-agihan">Agihan Sub-topik Sesi</h2>
+        <div id="distribution-viewer">
+          <div style="color: var(--text-light); text-align: center; padding: 1rem; font-size: 0.8rem;" data-i18n="desc-agihan-placeholder">
+            Tampal silibus di atas untuk melihat agihan sesi.
+          </div>
+        </div>
+      </div>
+
+      <div class="info-guide" id="quick-guide-box">
+        <strong>Panduan Pantas:</strong><br>
+        1. Pilih Tarikh Sesi 1. Sesi 2 & 3 akan diset secara automatik (+2 & +3 hari).<br>
+        2. Teks di kotak output di bawah dijana mengikut tarikh. Klik **Salin** untuk tampal terus ke TinyMCE.
+      </div>
+      
+    </aside>
+
+    <!-- Main Workspace (Right) -->
+    <main class="main-workspace">
+      
+      <!-- Week Controller Bar -->
+      <div class="week-bar">
+        <div class="week-navigation">
+          <button class="btn btn-secondary btn-sm" id="btn-prev-week" style="padding: 0.5rem 0.75rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="week-display" id="week-label">Minggu 1</div>
+          <button class="btn btn-secondary btn-sm" id="btn-next-week" style="padding: 0.5rem 0.75rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        
+        <div class="current-topic-banner" id="current-topic-display" style="flex: 1; max-width: none;">
+          Subjek Aktif: DFP40203 - Web Application Development
+        </div>
+      </div>
+
+      <!-- Compact 3-Column Parameters Grid -->
+      <div class="parameters-grid">
+        
+        <!-- SESI 1 (2 Jam) -->
+        <div class="parameter-card s1">
+          <div class="parameter-card-header">
+            <h4 data-i18n="s1-title">Sesi 1 (Kelas 2 Jam)</h4>
+            <span data-i18n="s1-subtitle">Teori / Asas</span>
+          </div>
+          <div class="parameter-card-body">
+            <div class="form-group-mini">
+              <label for="s1-date" data-i18n="label-date">Tarikh</label>
+              <input type="date" id="s1-date" class="input-mini-form">
+            </div>
+            
+            <div class="form-row-mini">
+              <div class="form-group-mini">
+                <label for="s1-type" data-i18n="label-class-type">Jenis Kelas</label>
+                <select id="s1-type" class="input-mini-form">
+                  <option value="kuliah" selected data-i18n="opt-kuliah">Kuliah (Teori)</option>
+                  <option value="amali" data-i18n="opt-amali">Amali / Lab</option>
+                  <option value="tutorial" data-i18n="opt-tutorial">Tutorial</option>
+                  <option value="kuiz" data-i18n="opt-kuiz">Kuiz / Ujian</option>
+                  <option value="tangguh" data-i18n="opt-tangguh">Cuti / Tangguh</option>
+                </select>
+              </div>
+              <div class="form-group-mini">
+                <label data-i18n="label-attendance">Hadir / Jumlah</label>
+                <div style="display: flex; align-items: center; gap: 0.2rem;">
+                  <input type="number" id="s1-attendance-present" class="input-mini-form text-center" value="28" style="width: 45px;">
+                  <span style="font-size: 0.8rem;">/</span>
+                  <input type="number" id="s1-attendance-total" class="input-mini-form text-center" value="30" style="width: 45px;">
+                </div>
+              </div>
+            </div>
+
+            <div class="slider-group-mini">
+              <label for="s1-understanding">
+                <span data-i18n="label-understanding-prefix">Kefahaman</span>: <span id="s1-understanding-val" style="font-weight: 700;">85%</span>
+              </label>
+              <input type="range" id="s1-understanding" min="0" max="100" value="85" step="5">
+            </div>
+
+            <div class="form-group-mini">
+              <label for="s1-issue" data-i18n="label-issue">Isu / Masalah</label>
+              <select id="s1-issue" class="input-mini-form">
+                <option value="tiada" selected data-i18n="opt-issue-tiada">Tiada Isu / Lancar</option>
+                <option value="fokus" data-i18n="opt-issue-fokus">Pelajar kurang fokus</option>
+                <option value="faham" data-i18n="opt-issue-faham">Pelajar lambat faham</option>
+                <option value="teknikal" data-i18n="opt-issue-teknikal">Masalah PC/Internet</option>
+                <option value="masa" data-i18n="opt-issue-masa">Kekangan masa</option>
+                <option value="kehadiran" data-i18n="opt-issue-kehadiran">Kehadiran kurang memuaskan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SESI 2 (2 Jam) -->
+        <div class="parameter-card s2">
+          <div class="parameter-card-header">
+            <h4 data-i18n="s2-title">Sesi 2 (Kelas 2 Jam)</h4>
+            <span data-i18n="s2-subtitle">Praktikal / Amali</span>
+          </div>
+          <div class="parameter-card-body">
+            <div class="form-group-mini">
+              <label for="s2-date" data-i18n="label-date">Tarikh</label>
+              <input type="date" id="s2-date" class="input-mini-form">
+            </div>
+            
+            <div class="form-row-mini">
+              <div class="form-group-mini">
+                <label for="s2-type" data-i18n="label-class-type">Jenis Kelas</label>
+                <select id="s2-type" class="input-mini-form">
+                  <option value="kuliah" data-i18n="opt-kuliah">Kuliah (Teori)</option>
+                  <option value="amali" selected data-i18n="opt-amali">Amali / Lab</option>
+                  <option value="tutorial" data-i18n="opt-tutorial">Tutorial</option>
+                  <option value="kuiz" data-i18n="opt-kuiz">Kuiz / Ujian</option>
+                  <option value="tangguh" data-i18n="opt-tangguh">Cuti / Tangguh</option>
+                </select>
+              </div>
+              <div class="form-group-mini">
+                <label data-i18n="label-attendance">Hadir / Jumlah</label>
+                <div style="display: flex; align-items: center; gap: 0.2rem;">
+                  <input type="number" id="s2-attendance-present" class="input-mini-form text-center" value="28" style="width: 45px;">
+                  <span style="font-size: 0.8rem;">/</span>
+                  <input type="number" id="s2-attendance-total" class="input-mini-form text-center" value="30" style="width: 45px;">
+                </div>
+              </div>
+            </div>
+
+            <div class="slider-group-mini">
+              <label for="s2-understanding">
+                <span data-i18n="label-understanding-prefix">Kefahaman</span>: <span id="s2-understanding-val" style="font-weight: 700;">80%</span>
+              </label>
+              <input type="range" id="s2-understanding" min="0" max="100" value="80" step="5">
+            </div>
+
+            <div class="form-group-mini">
+              <label for="s2-issue" data-i18n="label-issue">Isu / Masalah</label>
+              <select id="s2-issue" class="input-mini-form">
+                <option value="tiada" selected data-i18n="opt-issue-tiada">Tiada Isu / Lancar</option>
+                <option value="fokus" data-i18n="opt-issue-fokus">Pelajar kurang fokus</option>
+                <option value="faham" data-i18n="opt-issue-faham">Pelajar lambat faham</option>
+                <option value="teknikal" data-i18n="opt-issue-teknikal">Masalah PC/Internet</option>
+                <option value="masa" data-i18n="opt-issue-masa">Kekangan masa</option>
+                <option value="kehadiran" data-i18n="opt-issue-kehadiran">Kehadiran kurang memuaskan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SESI 3 (1 Jam) -->
+        <div class="parameter-card s3">
+          <div class="parameter-card-header">
+            <h4 data-i18n="s3-title">Sesi 3 (Kelas 1 Jam)</h4>
+            <span data-i18n="s3-subtitle">Tutorial / Imbasan</span>
+          </div>
+          <div class="parameter-card-body">
+            <div class="form-group-mini">
+              <label for="s3-date" data-i18n="label-date">Tarikh</label>
+              <input type="date" id="s3-date" class="input-mini-form">
+            </div>
+            
+            <div class="form-row-mini">
+              <div class="form-group-mini">
+                <label for="s3-type" data-i18n="label-class-type">Jenis Kelas</label>
+                <select id="s3-type" class="input-mini-form">
+                  <option value="kuliah" data-i18n="opt-kuliah">Kuliah (Teori)</option>
+                  <option value="amali" data-i18n="opt-amali">Amali / Lab</option>
+                  <option value="tutorial" selected data-i18n="opt-tutorial">Tutorial</option>
+                  <option value="kuiz" data-i18n="opt-kuiz">Kuiz / Ujian</option>
+                  <option value="tangguh" data-i18n="opt-tangguh">Cuti / Tangguh</option>
+                </select>
+              </div>
+              <div class="form-group-mini">
+                <label data-i18n="label-attendance">Hadir / Jumlah</label>
+                <div style="display: flex; align-items: center; gap: 0.2rem;">
+                  <input type="number" id="s3-attendance-present" class="input-mini-form text-center" value="28" style="width: 45px;">
+                  <span style="font-size: 0.8rem;">/</span>
+                  <input type="number" id="s3-attendance-total" class="input-mini-form text-center" value="30" style="width: 45px;">
+                </div>
+              </div>
+            </div>
+
+            <div class="slider-group-mini">
+              <label for="s3-understanding">
+                <span data-i18n="label-understanding-prefix">Kefahaman</span>: <span id="s3-understanding-val" style="font-weight: 700;">90%</span>
+              </label>
+              <input type="range" id="s3-understanding" min="0" max="100" value="90" step="5">
+            </div>
+
+            <div class="form-group-mini">
+              <label for="s3-issue" data-i18n="label-issue">Isu / Masalah</label>
+              <select id="s3-issue" class="input-mini-form">
+                <option value="tiada" selected data-i18n="opt-issue-tiada">Tiada Isu / Lancar</option>
+                <option value="fokus" data-i18n="opt-issue-fokus">Pelajar kurang fokus</option>
+                <option value="faham" data-i18n="opt-issue-faham">Pelajar lambat faham</option>
+                <option value="teknikal" data-i18n="opt-issue-teknikal">Masalah PC/Internet</option>
+                <option value="masa" data-i18n="opt-issue-masa">Kekangan masa</option>
+                <option value="kehadiran" data-i18n="opt-issue-kehadiran">Kehadiran kurang memuaskan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compiled Portal-style Output Editors -->
+      <div class="compiled-editors-container">
+        
+        <!-- Compiled NOTES Editor -->
+        <div class="editor-panel">
+          <div class="editor-panel-header notes-header">
+            <span class="editor-title" data-i18n="editor-title-notes">NOTES (Aktiviti & Kandungan Seluruh Minggu)</span>
+            <button class="btn btn-primary btn-sm btn-copy-editor" id="btn-copy-compiled-notes" data-i18n="btn-copy-notes">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Salin NOTES
+            </button>
+          </div>
+          <div class="editor-body-wrapper">
+            <div class="editor-menu-bar">File  Edit  View  Format  Tools</div>
+            <textarea id="compiled-notes-output" class="compiled-textarea" placeholder="NOTES mingguan akan dijana mengikut tarikh..."></textarea>
+            <div class="editor-status-bar">p &raquo; span</div>
+          </div>
+        </div>
+
+        <!-- Compiled REFLECTION Editor -->
+        <div class="editor-panel">
+          <div class="editor-panel-header reflection-header">
+            <span class="editor-title" data-i18n="editor-title-reflection">REFLECTION (Refleksi Seluruh Minggu)</span>
+            <button class="btn btn-primary btn-sm btn-copy-editor" id="btn-copy-compiled-reflection" data-i18n="btn-copy-reflection">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Salin REFLECTION
+            </button>
+          </div>
+          <div class="editor-body-wrapper">
+            <div class="editor-menu-bar">File  Edit  View  Format  Tools</div>
+            <textarea id="compiled-reflection-output" class="compiled-textarea" placeholder="REFLECTION mingguan akan dijana mengikut tarikh..."></textarea>
+            <div class="editor-status-bar">p &raquo; span</div>
+          </div>
+        </div>
+
+        <!-- Compiled CQI Editor -->
+        <div class="editor-panel">
+          <div class="editor-panel-header cqi-header">
+            <span class="editor-title" data-i18n="editor-title-cqi">ANALYSIS & CQI (Penambahbaikan Seluruh Minggu)</span>
+            <button class="btn btn-primary btn-sm btn-copy-editor" id="btn-copy-compiled-cqi" data-i18n="btn-copy-cqi">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Salin CQI
+            </button>
+          </div>
+          <div class="editor-body-wrapper">
+            <div class="editor-menu-bar">File  Edit  View  Format  Tools</div>
+            <textarea id="compiled-cqi-output" class="compiled-textarea" placeholder="ANALYSIS & CQI mingguan akan dijana mengikut tarikh..."></textarea>
+            <div class="editor-status-bar">p &raquo; span</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action & Import/Export Footer Bar -->
+      <div class="action-bar">
+        <div>
+          <span style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="footer-desc">
+            Sila semak semula ayat di atas sebelum menyalin ke portal.
+          </span>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="btn btn-secondary btn-sm" id="btn-export" data-i18n="btn-export" style="width: auto;">Eksport JSON</button>
+          <button class="btn btn-secondary btn-sm" id="btn-import-trigger" data-i18n="btn-import" style="width: auto;">Import JSON</button>
+          <input type="file" id="file-import" style="display: none;" accept=".json">
+          <button class="btn btn-secondary btn-sm" id="btn-reset" data-i18n="btn-reset" style="width: auto; color: var(--danger);">Reset Data</button>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toast-message">Teks berjaya disalin!</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
